@@ -1,235 +1,149 @@
 <!DOCTYPE html>
 <html>
-  
   <head>
-    
     <base target="_top">
     <style>
-      /* General body and table styles */
       body {
         font-family: Arial, sans-serif;
+        margin: 20px;
         background-color: #f9f9f9;
         color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 20px;
       }
 
       h3 {
-        background-color: #4a90e2;
-        color: #fff;
         text-align: center;
-        padding: 10px;
-        border-radius: 4px;
-        width: 100%;
-        max-width: 800px;
+        color: #4CAF50;
       }
 
       table {
         width: 100%;
-        max-width: 800px;
         border-collapse: collapse;
         margin: 20px 0;
+        font-size: 16px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
-      th, td {
+      table th, table td {
+        padding: 12px 15px;
+        text-align: left;
         border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
       }
 
-      th {
-        background-color: #4a90e2;
+      table th {
+        background-color: #4CAF50;
         color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
       }
 
-      tr:nth-child(even) {
+      table tr:nth-child(even) {
         background-color: #f2f2f2;
       }
 
-      tr:hover {
-        background-color: #eaf3fc;
+      table tr:hover {
+        background-color: #f1f1f1;
+        transition: background-color 0.3s;
       }
 
-      input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #4a90e2;
-        border-radius: 4px;
-        outline: none;
+      .button-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        display: flex;
+        gap: 15px;
       }
 
-      input[type="text"]:focus {
-        border-color: #357ab8;
-      }
-
-      /* Dropdown menu styles */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 10px;
-        margin-top: 30px;
-        height: 40px;
-        width: 100%;
-      }
-
-      .dropbtn {
-        background-color: #4a90e2;
-        color: white;
+      .button-container button {
         padding: 10px 20px;
-        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
         border: none;
+        border-radius: 5px;
         cursor: pointer;
-        border-radius: 4px;
-        height: 30px;
-        width: 100%;
+        font-size: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
-      .dropbtn:hover {
-        background-color: #357ab8;
+      .button-container button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+        transition: all 0.3s;
       }
 
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
-
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
-
-      .dropdown-content a:hover {
-        background-color: #ddd;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
-      /* Nested dropdown menu */
-      .nested-dropdown {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 160px;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        background-color: #f1f1f1;
-      }
-
-      .dropdown-content > a:hover .nested-dropdown {
-        display: block;
-      }
-
-      .dropdown-content > a:hover .nested-dropdown {
-        display: block;
+      .button-container button:active {
+        background-color: #39843b;
       }
     </style>
   </head>
   <body>
-    <!-- Dropdown menu structure -->
-    <div class="dropdown">
-      <button class="dropbtn">MENU</button>
-      <div id="dropdownOptions" class="dropdown-content">
-        <a href="#" id="effectif1">EFFECTIF</a>
-        <div id="nestedEffectif1" class="nested-dropdown">
-          <a href="#" id="finca1">FINCA 01</a>
-          <a href="#" id="finca2">FINCA 02</a>
-          <a href="#" id="finca3">FINCA 03</a>
-          <a href="#" id="finca4">FINCA 04</a>
-          <a href="#" id="finca5">FINCA 05</a>
-          <a href="#" id="finca6">FINCA 06</a>
-          <a href="#" id="finca9">FINCA 09</a>
-          <a href="#" id="finca13">FINCA 13</a>
-          <a href="#" id="finca19">FINCA 19</a>
-          <a href="#" id="finca20">FINCA 20</a>
-          <a href="#" id="finca21">FINCA 21</a>
-          <a href="#" id="finca22">FINCA 22</a>
-        </div>
-        <a href="https://aroma-rh.github.io/LA-ABSE/">LA BASE</a>
-        <a href="https://aroma-rh.github.io/EFFECTIF/">FORM</a>
-        <a href="#">SALAIRE</a>
-      </div>
+    <div class="button-container">
+      <button id="downloadExcel">Téléchargez Excel</button>
+      <button id="takeScreenshot">Téléchargez Image</button>
+      <button onclick="copyLink()">Copier le lien</button>
     </div>
-
-    <h3>EFFECTIF  F20 </h3>
-
+    <h3>EFFECTIF F20</h3>
+    <!-- Table -->
     <table id="dataTable">
-      
       <tbody id="tableData"></tbody>
     </table>
 
+
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
     <script>
-      let data = [];  
+       function copyLink() {
+            
+            const currentURL = window.location.href;
+
+            
+            navigator.clipboard.writeText(currentURL).then(() => {
+                alert("Le lien a été copié avec succès !");
+            }).catch((err) => {
+                alert("Une erreur s'est produite lors de la copie du lien: " + err);
+            });
+        }
+      let data = [];
 
       function loadData() {
-        fetch('https://script.google.com/macros/s/AKfycbw4xREWkMCYPxJ8WbvAojpfARGM3vp48XmDnhXos5ZuBL801Yn71rxGPMoRNk63OpKr/exec')
+        fetch('https://script.google.com/macros/s/AKfycbw4xREWkMCYPxJ8WbvAojpfARGM3vp48XmDnhXos5ZuBL801Yn71rxGPMoRNk63OpKr/exec'')
           .then(response => response.json())
           .then(jsonData => {
-            data = jsonData;  
-            renderTable(data);  
+            data = jsonData;
+            renderTable(data);
           })
-          .catch(error => {
-            console.error('Error loading data:', error);
-            alert('Error loading data');
-          });
+          .catch(error => console.error('Error loading data:', error));
       }
 
       function renderTable(displayData) {
         const tableData = document.getElementById('tableData');
-        tableData.innerHTML = displayData.map(row => 
+        tableData.innerHTML = displayData.map(row =>
           `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
         ).join('');
       }
 
-      function filterTable() {
-        const filters = [
-          document.getElementById("filter1").value.toLowerCase(),
-          document.getElementById("filter2").value.toLowerCase(),
-          document.getElementById("filter3").value.toLowerCase(),
-          document.getElementById("filter4").value.toLowerCase(),
-          document.getElementById("filter5").value.toLowerCase()
-        ];
-
-        const filteredData = data.filter(row =>
-          filters.every((filter, i) => {
-            if (!filter) return true;  
-
-            const cellValue = row[i] ? row[i].toString().toLowerCase() : '';
-
-            return cellValue.includes(filter);
-          })
-        );
-
-        renderTable(filteredData);
+      function exportTableToExcel() {
+        const table = document.getElementById('dataTable');
+        const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+        XLSX.writeFile(workbook, 'Effectif f20.xlsx');
       }
 
+      function takeScreenshot() {
+        const table = document.getElementById('dataTable');
+        html2canvas(table).then(canvas => {
+          const link = document.createElement('a');
+          link.download = 'Effectif F20.png';
+          link.href = canvas.toDataURL();
+          link.click();
+        }).catch(error => console.error('Error:', error));
+      }
 
-      document.getElementById('effectif1').addEventListener('click', function(event) {
-        const nestedEffectif = document.getElementById('nestedEffectif1');
-     
-        nestedEffectif.style.display = 'none';
-       
-        event.preventDefault();
-      });
-
-      
-      document.getElementById('effectif1').addEventListener('mouseover', function() {
-        const nestedEffectif = document.getElementById('nestedEffectif1');
-        nestedEffectif.style.display = 'block';
-      });
-
-      
+      document.getElementById('downloadExcel').addEventListener('click', exportTableToExcel);
+      document.getElementById('takeScreenshot').addEventListener('click', takeScreenshot);
       document.addEventListener('DOMContentLoaded', loadData);
     </script>
   </body>
