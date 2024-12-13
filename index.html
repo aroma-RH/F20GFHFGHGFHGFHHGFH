@@ -160,10 +160,11 @@
       background-color: #397d3b;
     }
 
-    /* Optional: Add a little spacing between the buttons */
+
     #downloadExcel {
       margin-right: 20px;
     }
+    
   </style>
 </head>
 <body>
@@ -172,7 +173,7 @@
     <button id="takeScreenshot">Téléchargez Image</button>
     <button id="takeScreenshot1" onclick="copyLink()">Copier le lien</button>
   </div>
-<h2>EFFECTIF F20</h2>
+  <div id="result"></div>
 
 <table id="dataTable">
   <thead>
@@ -203,7 +204,7 @@
       <input type="text" id="finca" name="finca"><br><br>
 
       <label for="date">Date:</label>
-      <input type="date" id="date" name="date"><br><br>
+      <input type="text" id="date" name="date"><br><br>
 
       <label for="tarea">Tarea:</label>
       <input type="text" id="tarea" name="tarea"><br><br>
@@ -215,9 +216,42 @@
     </form>
   </div>
 </div>
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeConfirmationModal()">&times;</span>
+      <p>Êtes-vous sûr de vouloir supprimer cette Tache?</p>
+      <button id="confirmDeleteButton" class="delete-button">Confirmer</button>
+      <button onclick="closeConfirmationModal()" class="edit-button">Annuler</button>
+    </div>
+  </div>
+  
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
 <script>
+
+
+var confirmationModal = document.getElementById("confirmationModal");
+var confirmDeleteButton = document.getElementById("confirmDeleteButton");
+let rowToDeleteIndex = null;
+
+
+function showConfirmationModal(index) {
+    rowToDeleteIndex = index; 
+    confirmationModal.style.display = "block";
+}
+
+
+function closeConfirmationModal() {
+    confirmationModal.style.display = "none";
+    rowToDeleteIndex = null; 
+}
+
+confirmDeleteButton.onclick = function() {
+    if (rowToDeleteIndex !== null) {
+        deleteRow(rowToDeleteIndex); 
+        closeConfirmationModal(); 
+    }
+};
 function copyLink() {
             
             const currentURL = window.location.href;
@@ -239,10 +273,11 @@ window.onload = function() {
 
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("date").value = today; 
+    
 };
 
 
-const webAppUrl = "https://script.google.com/macros/s/AKfycbxfViocVAOamjpNUzRdfkMY_bKXlq0wmubGlxLXe6jrUZCVyGwVpzWwCrEgUSOsLMTh/exec"; 
+const webAppUrl = "https://script.google.com/macros/s/AKfycbyw5kngb7juXJ4wVJvxrSvrI6u7K2c9fZ4k9OehRkSJbKp1oiW-z5JCiaZCjD9pypE66A/exec"; 
 
 
 var modal = document.getElementById("myModal");
@@ -298,7 +333,7 @@ function loadData() {
                     deleteButton.textContent = "Supprimer";
                     deleteButton.classList.add("delete-button");
                     deleteButton.onclick = function() {
-                        deleteRow(index);
+                        showConfirmationModal(index);
                     };
 
                     tdActions.appendChild(editButton);
@@ -380,6 +415,9 @@ function exportTableToExcel() {
       document.getElementById('downloadExcel').addEventListener('click', exportTableToExcel);
       document.getElementById('takeScreenshot').addEventListener('click', takeScreenshot);
       document.addEventListener('DOMContentLoaded', loadData);
+
+
+      
 </script>
 
 </body>
