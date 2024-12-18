@@ -262,19 +262,10 @@ function copyLink() {
             }).catch((err) => {
                 alert("Une erreur s'est produite lors de la copie du lien: " + err);
             });
-        }
+        };
 
-window.onload = function() {
-    loadData(); 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-    var yyyy = today.getFullYear();
+       
 
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("date").value = today; 
-    
-};
 
 
 const webAppUrl = "https://script.google.com/macros/s/AKfycbyw5kngb7juXJ4wVJvxrSvrI6u7K2c9fZ4k9OehRkSJbKp1oiW-z5JCiaZCjD9pypE66A/exec"; 
@@ -350,7 +341,18 @@ function loadData() {
 function openModal(index, row) {
     document.getElementById("equipe").value = row[0]; 
     document.getElementById("finca").value = row[1];   
-    document.getElementById("date").value = row[2];   
+    let rawDate = row[2]; 
+    if (rawDate.includes("T")) {
+    rawDate = rawDate.split("T")[0]; 
+    }
+    let date = new Date(rawDate);
+    date.setDate(date.getDate() + 1); 
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0'); 
+    let day = String(date.getDate()).padStart(2, '0');
+    let updatedDate = `${year}-${month}-${day}`;
+
+    document.getElementById("date").value = updatedDate;
     document.getElementById("tarea").value = row[3];   
     document.getElementById("effectif").value = row[4];
     modal.style.display = "block";
