@@ -160,6 +160,12 @@
       
     }
 
+    .table-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
     #downloadExcel:hover, #takeScreenshot:hover, #takeScreenshot1:hover {
       background-color: #45a049;
     }
@@ -182,7 +188,7 @@
     <button id="takeScreenshot1" onclick="copyLink()">Copier le lien</button>
   </div>
   <div id="result"></div>
-
+<div class="table-container">
 <table id="dataTable">
   <thead>
     <tr>
@@ -198,7 +204,7 @@
    
   </tbody>
 </table>
-
+</div>
 
 <div id="myModal" class="modal">
   <div class="modal-content">
