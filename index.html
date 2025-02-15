@@ -406,36 +406,34 @@ function deleteRow(index) {
 }
 function exportTableToExcel() {
     const table = document.getElementById('dataTable');
-    
-    
+
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0'); 
     const yyyy = today.getFullYear();
     const dateStr = `${dd}-${mm}-${yyyy}`;
     const filename = `Effectif_${dateStr}.xlsx`;
+
     const workbook = XLSX.utils.table_to_book(table, {
         sheet: "EFFECTIF",
-        raw: true,
+        raw: true, 
     });
 
     const sheet = workbook.Sheets["EFFECTIF"];
     const range = XLSX.utils.decode_range(sheet["!ref"]);
-    for (let col = range.s.c; col <= range.e.c; col++) {
-        for (let row = range.s.r + 1; row <= range.e.r; row++) {
-            const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
-            const cell = sheet[cellAddress];
-            if (cell && cell.t === "s" && /\d{2}-\d{2}-\d{4}/.test(cell.v)) {
-                cell.t = "s"; 
-                cell.v = cell.v; 
-            }
+    const colIndex = 4;
+
+    for (let row = range.s.r + 1; row <= range.e.r; row++) {
+        const cellAddress = XLSX.utils.encode_cell({ r: row, c: colIndex });
+        const cell = sheet[cellAddress];
+
+        if (cell && cell.t === "s" && !isNaN(cell.v)) {
+            cell.t = "n";
+            cell.v = parseFloat(cell.v); 
         }
     }
-
     XLSX.writeFile(workbook, filename);
 }
-
-
 
       function takeScreenshot() {
         const table = document.getElementById('dataTable');
